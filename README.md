@@ -8,7 +8,7 @@
 - Redux & React-redux & @reduxjs/toolkit
 - Axios
 - Formik + Yup
-- Less
+- Sass
 
 ## Backend:
 
