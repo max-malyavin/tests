@@ -97,4 +97,23 @@ describe("Аутентификация и регистрация", () => {
     cy.contains("Загрузка");
     cy.contains(accountEmail_2);
   });
+
+  it("Неуспешная регистрация - занята почта", () => {
+    cy.contains("Создать новый аккаунт").click();
+    cy.url().should("include", "/signup");
+    email(accountEmail_1);
+    password("pas123");
+    containsAndClick("Зарегистрироваться");
+    cy.contains("Загрузка");
+    cy.contains("Пользователь с таким email уже существует.");
+  });
+
+  it("Неуспешная аутентификация - нет пользователя с таким email", () => {
+    cy.contains("Вход");
+    email("lol123@mail.ru");
+    password("123");
+    containsAndClick("Логин");
+    cy.contains("Загрузка");
+    cy.contains("Нет пользователя с таким email.");
+  });
 });

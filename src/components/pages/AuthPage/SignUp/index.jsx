@@ -10,6 +10,7 @@ import { AddEventForm } from "@/components/form-config/add-event-form";
 import { register } from "@/store/ducks/user/reducer";
 
 export function SignUp() {
+  const user = useSelector(userSelectors.userData);
   const isLoading = useSelector(userSelectors.isLoading);
   const dispatch = useDispatch();
 
@@ -53,6 +54,7 @@ export function SignUp() {
             </Link>
           </form>
         </FormikProvider>
+        <div style={{ fontSize: "20px", padding: "10px" }}>{user && JSON.stringify(user.data)}</div>
       </LayoutAuth.Form>
     </LayoutAuth>
   );

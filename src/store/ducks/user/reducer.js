@@ -79,6 +79,9 @@ export const slice = createSlice({
       })
       .addCase(register.pending, (state) => {
         state.isLoading = true;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.data = action.payload.data;
       });
   },
 });
