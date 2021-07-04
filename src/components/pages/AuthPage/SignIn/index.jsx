@@ -8,6 +8,7 @@ import { InputField } from "@/components/form-config/Input";
 import { AddEventForm } from "@/components/form-config/add-event-form";
 import { ButtonField } from "@/components/form-config/Button";
 import { LayoutAuth } from "../../LayoutAuth";
+import { validationPassword } from "@/components/form-config/add-event-form";
 
 export function SignIn() {
   const user = useSelector(userSelectors.userData);
@@ -18,8 +19,8 @@ export function SignIn() {
     dispatch(login(values));
     onClose();
   };
-  const { onClose, formik } = AddEventForm(onSubmit, {});
-  console.log(user, " user");
+  const { onClose, formik } = AddEventForm(onSubmit, { password: "" }, validationPassword);
+
   return (
     <LayoutAuth>
       <LayoutAuth.Title>
@@ -50,9 +51,10 @@ export function SignIn() {
 
             {isLoading && <span>Загрузка...</span>}
             <hr />
-            <Link to="/signup">
-              <button>Создать новый аккаунт</button>
+            <Link style={{ marginRight: "20px" }} to="/forgot_password">
+              Забыли пароль?
             </Link>
+            <Link to="/signup">Создать новый аккаунт</Link>
           </form>
         </FormikProvider>
         <div style={{ fontSize: "20px", padding: "10px" }}>{user && JSON.stringify(user.data)}</div>

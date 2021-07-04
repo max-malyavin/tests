@@ -117,3 +117,52 @@ describe("Аутентификация и регистрация", () => {
     cy.contains("Нет пользователя с таким email.");
   });
 });
+
+describe("Восстановление пароля с помощью почты", () => {
+  beforeEach(() => {
+    cy.visit("/");
+  });
+
+  it("Неуспешное восстановление пароля - пользователя с таким адресом не зарегистрировано", () => {
+    cy.get("a").contains("Забыли пароль?").click();
+    cy.url().should("include", "/forgot_password");
+    email("lol333@mail.ru");
+    containsAndClick("Восстановить");
+    cy.contains("Загрузка");
+    cy.contains("Пользователя с таким адресом не зарегистрировано");
+  });
+
+  it("Успешное восстановление пароля", () => {
+    cy.get("a").contains("Забыли пароль?").click();
+    cy.url().should("include", "/forgot_password");
+    email(accountEmail_1);
+    containsAndClick("Восстановить");
+    cy.contains("Загрузка");
+    cy.contains("Успешно. Обновите пароль! Пожалуйста проверяйте почту!");
+  });
+
+  it("Невалидная почта", () => {
+    cy.get("a").contains("Забыли пароль?").click();
+    cy.url().should("include", "/forgot_password");
+    const loginPage = new LoginPage();
+    loginPage.getEmailField().type("fake_email");
+    loginPage.getSubmitBtn().click();
+    loginPage.getValidMailError().should("exist");
+  });
+});
+
+describe("Ошибка 404", function () {
+  beforeEach(() => {
+    cy.visit("/");
+  });
+
+  it("Пользовательская ошибка 404", function () {
+    cy.visit("/qwerty");
+    cy.url().should("include", "/qwerty");
+    cy.get("h1").should("contain", "404 Ошибка");
+    cy.get("p").should("contain", "Страница не найдена");
+    cy.get("a").contains("На главную").click();
+    cy.url().should("include", "/");
+    cy.contains("Вход");
+  });
+});

@@ -6,7 +6,7 @@ const cssAndScss = {
     {
       loader: MiniCssExtractPlugin.loader,
     },
-    "style-loader",
+    // "style-loader",
     "css-loader",
     "sass-loader",
   ],
@@ -44,4 +44,9 @@ const js = {
   use: ["babel-loader"],
 };
 
-module.exports = { images, fonts, cssAndScss, js };
+module.exports = {
+  images,
+  fonts,
+  cssAndScss,
+  js,
+};

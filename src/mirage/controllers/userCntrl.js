@@ -33,7 +33,6 @@ const UserCtrl = {
   },
   login(schema, request) {
     const data = JSON.parse(request.requestBody);
-    console.log(schema.all("user"), "s", data);
     const user = schema.all("user").models.find((model) => model.attrs.email === data.email);
 
     if (!user) {
@@ -63,5 +62,20 @@ const UserCtrl = {
   },
 
   logout(schema, request) {},
+  forgot(schema, request) {
+    console.log(request);
+    const data = JSON.parse(request.requestBody);
+    const user = schema.all("user").models.find((model) => model.attrs.email === data.email);
+
+    if (!user) {
+      return {
+        error: "Пользователя с таким адресом не зарегистрировано",
+      };
+    }
+    return {
+      data: { message: "Успешно. Обновите пароль! Пожалуйста проверяйте почту!" },
+      status: "Успешно",
+    };
+  },
 };
 export default UserCtrl;

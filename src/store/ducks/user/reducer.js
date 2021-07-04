@@ -22,6 +22,21 @@ export const login = createAsyncThunk("user/login", async ({ email, password }, 
   }
 });
 
+export const forgot = createAsyncThunk("user/forgot", async ({ email }, thunkAPI) => {
+  try {
+    const response = await UserService.forgot({ email });
+    if (response.data.error) {
+      return { data: { data: response.data.error } };
+    } else {
+      return { data: response.data };
+    }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    thunkAPI.dispatch(setUserLoading({ value: false }));
+  }
+});
+
 export const logout = createAsyncThunk("user/logout", async (_, thunkAPI) => {
   try {
   } catch (error) {
@@ -76,6 +91,12 @@ export const slice = createSlice({
       })
       .addCase(logout.fulfilled, (state) => {
         state.data = null;
+      })
+      .addCase(forgot.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(forgot.fulfilled, (state, action) => {
+        state.data = action.payload.data;
       })
       .addCase(register.pending, (state) => {
         state.isLoading = true;

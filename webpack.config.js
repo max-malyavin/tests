@@ -49,9 +49,7 @@ module.exports = {
     port: 4200,
     hot: true,
     open: true,
-    historyApiFallback: {
-      index: "./index.html",
-    },
+    historyApiFallback: true,
     headers: {
       //  "Access-Control-Allow-Origin": "*"
     },
@@ -64,5 +62,6 @@ module.exports = {
   output: {
     filename: !isDev ? "js/[name].[fullhash].bundle.js" : "js/[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
+    publicPath: "/",
   },
 };

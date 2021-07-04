@@ -8,13 +8,15 @@ export interface AddEventFormValues {
   placeholder: string;
   label: string;
 }
+export const validationPassword = { password: Yup.string().required("Введите пароль") };
 
 export const AddEventForm = (
   onSubmit: (
     values: AddEventFormValues,
     formikHelpers?: FormikHelpers<AddEventFormValues>
   ) => void | Promise<any>,
-  intialValues?: Partial<AddEventFormValues>
+  intialValues?: Partial<AddEventFormValues>,
+  validations?: any
 ): any => {
   const onClose = () => {
     formik.resetForm();
@@ -23,12 +25,11 @@ export const AddEventForm = (
   const formik = useFormik<any>({
     initialValues: {
       email: "",
-      password: "",
       ...intialValues,
     },
     validationSchema: Yup.object({
       email: Yup.string().email("Введите корректный email").required("Введите email"),
-      password: Yup.string().required("Введите пароль"),
+      ...validations,
     }),
     // onSubmit(values) {
     //   onSubmit(values);

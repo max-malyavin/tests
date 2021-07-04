@@ -19,5 +19,11 @@ const userRouter = [
     handler: UserCtrl.logout,
     response: { timing: 1000 },
   },
+  {
+    type: "post",
+    url: "/auth/forgot",
+    handler: UserCtrl.forgot,
+    response: { timing: 1000 },
+  },
 ];
 export default userRouter;
